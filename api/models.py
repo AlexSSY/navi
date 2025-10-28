@@ -1,4 +1,4 @@
-from typing import Optional, Any, AnyStr, Dict
+from typing import Optional, Any, Dict
 from pydantic import BaseModel, Field
 
 
@@ -20,4 +20,5 @@ class PasswordVerifyRequest(BaseModel):
 class APIResponse(BaseModel):
     success: bool
     error: Optional[str] = None
-    data: Dict[AnyStr, Any] = Field(default_factory=dict)
+    next: str
+    data: Dict[str, Any] = Field(default_factory=dict)

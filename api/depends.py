@@ -2,6 +2,7 @@ import os
 from fastapi import Header
 from fastapi import HTTPException
 from aiogram.utils.web_app import safe_parse_webapp_init_data
+import aiosqlite
 
 
 async def get_telegram_user_id(init_data: str = Header(..., alias="X-Telegram-Init-Data")) -> int:
@@ -18,3 +19,15 @@ async def get_telegram_user_id(init_data: str = Header(..., alias="X-Telegram-In
         raise HTTPException(status_code=401, detail="No user in initData")
 
     return parsed.user.id
+
+
+async def get_db():
+    db_connection = await aiosqlite.connect(os.getenv('DB_NAME'))
+    try:
+        yield db_connection
+    finally:
+        await db_connection.close()
+
+
+async def get_pagination():
+    pass
